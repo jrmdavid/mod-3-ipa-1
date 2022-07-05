@@ -69,14 +69,12 @@ def caesar_cipher(message, shift):
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     result = ""
     for i in range(len(message)):
-        if 65 <= ord(message[i]) + shift <= 90:
-            char = ord(message[i]) + shift 
-        elif ord(message[i]) + shift > 90:
-            char = ((ord(message[i]) + shift - 90) % 26) + 64
+        base = message[i]
+        if base == " ":
+            result += chr(32)
         else:
-            char = ord(message[i]) 
-        result += chr(char) 
-    return result 
+            result += chr((((ord(base)) - 65 + shift) % 26) + 65)
+    return result
 
 def shift_by_letter(letter, letter_shift):
     '''Shift By Letter. 
@@ -218,11 +216,12 @@ def scytale_cipher(message, shift):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     result = ""
+    while len(message) % shift != 0:
+        message += "_"
     for i in range(len(message)):
-        while len(message) % shift != 0:
-            message += "_"
-        result  += message[(i // shift) + (len(message) // shift) * (i % shift)]
-    return result 
+        index = (i // shift) + (len(message) // shift) * (i % shift)
+        result  += message[index]
+    return result
 
 def scytale_decipher(message, shift):
     '''Scytale De-cipher.
